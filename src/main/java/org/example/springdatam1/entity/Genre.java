@@ -9,9 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-//@Data
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Genre {

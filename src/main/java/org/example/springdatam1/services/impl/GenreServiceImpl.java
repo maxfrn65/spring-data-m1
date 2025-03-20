@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -33,11 +34,17 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre update(Long aLong, Genre entity) {
-        return null;
+        Genre genreDb = genreRepository.findById(aLong).get();
+
+        if (Objects.nonNull(entity.getName()) && !"".equalsIgnoreCase(entity.getName())) {
+            genreDb.setName(entity.getName());
+        }
+
+        return genreRepository.save(genreDb);
     }
 
     @Override
     public void delete(Long aLong) {
-
+        genreRepository.deleteById(aLong);
     }
 }

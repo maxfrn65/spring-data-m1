@@ -3,6 +3,7 @@ package org.example.springdatam1.services.impl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.example.springdatam1.entity.Author;
+import org.example.springdatam1.entity.Genre;
 import org.example.springdatam1.repository.AuthorRepository;
 import org.example.springdatam1.repository.BookRepository;
 import org.example.springdatam1.services.AuthorService;
@@ -10,6 +11,7 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -42,7 +44,13 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author update(Long aLong, Author entity) {
-        return null;
+        Author authorDb = authorRepository.findById(aLong).get();
+
+        if (Objects.nonNull(entity.getName()) && !"".equalsIgnoreCase(entity.getName())) {
+            authorDb.setName(entity.getName());
+        }
+
+        return authorRepository.save(authorDb);
     }
 
     @Override
