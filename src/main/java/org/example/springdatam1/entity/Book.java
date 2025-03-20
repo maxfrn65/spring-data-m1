@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -23,12 +26,20 @@ public class Book {
     @JoinColumn(name = "author_id",nullable = true)
     private Author author;
 
+    @ManyToMany
+    @JoinTable(name="book_genre",
+            joinColumns = @JoinColumn(name="book_id"),
+            inverseJoinColumns = @JoinColumn(name="genre_id"))
+    private Set<Genre> genres = new HashSet<>();
+
 
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+               // ", author=" + author +
+              //  ", genres=" + genres +
                 '}';
     }
 }
